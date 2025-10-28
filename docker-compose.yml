@@ -1,0 +1,65 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel-react-app
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - ./storage:/var/www/html/storage
+      - ./database:/var/www/html/database
+      - ./.env:/var/www/html/.env
+    environment:
+      - APP_NAME=Laravel
+      - APP_ENV=production
+      - APP_DEBUG=false
+      - APP_URL=http://localhost:8000
+      - DB_CONNECTION=sqlite
+      - DB_DATABASE=/var/www/html/database/database.sqlite
+      - SESSION_DRIVER=database
+      - QUEUE_CONNECTION=database
+      - CACHE_STORE=database
+    networks:
+      - laravel-network
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7-alpine
+    container_name: laravel-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - laravel-network
+
+  # Optional: MySQL database (uncomment if you prefer MySQL over SQLite)
+  # mysql:
+  #   image: mysql:8.0
+  #   container_name: laravel-mysql
+  #   restart: unless-stopped
+  #   ports:
+  #     - "3306:3306"
+  #   environment:
+  #     MYSQL_DATABASE: laravel
+  #     MYSQL_ROOT_PASSWORD: secret
+  #     MYSQL_USER: laravel
+  #     MYSQL_PASSWORD: secret
+  #   volumes:
+  #     - mysql-data:/var/lib/mysql
+  #   networks:
+  #     - laravel-network
+
+networks:
+  laravel-network:
+    driver: bridge
+
+volumes:
+  redis-data:
+    driver: local
+  # mysql-data:
+  #   driver: local
