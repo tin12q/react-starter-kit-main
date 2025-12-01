@@ -73,7 +73,7 @@ pipeline {
                                 ${IMAGE_NAME}:${BUILD_NUMBER}
 
                             echo "Deployment done."
-                        EOF
+                            EOF
                     """
                 }
             }
