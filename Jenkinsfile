@@ -57,23 +57,24 @@ pipeline {
                     sh """
                         ssh -i $SSH_KEY -o StrictHostKeyChecking=no ${SSH_USER}@${APP_HOST} << 'EOF'
                             
-                            echo "Unpacking image..."
-                            cd /tmp
-                            bunzip2 -f image.tar.bz2
-                            docker load -i image.tar
+                        echo "Unpacking image..."
+                        cd /tmp
+                        bunzip2 -f image.tar.bz2
+                        docker load -i image.tar
 
-                            echo "Stopping old container..."
-                            docker stop ${CONTAINER_NAME} || true
-                            docker rm ${CONTAINER_NAME} || true
+                        echo "Stopping old container..."
+                        docker stop ${CONTAINER_NAME} || true
+                        docker rm ${CONTAINER_NAME} || true
 
-                            echo "Running new container..."
-                            docker run -d \
-                                --name ${CONTAINER_NAME} \
-                                -p ${HOST_PORT}:${APP_PORT} \
-                                ${IMAGE_NAME}:${BUILD_NUMBER}
+                        echo "Running new container..."
+                        docker run -d --name ${CONTAINER_NAME} \
+                        --env-file /srv/react/.env \
+                        -p ${HOST_PORT}:${APP_PORT} \
+                        ${IMAGE_NAME}:${BUILD_NUMBER}
 
-                            echo "Deployment done."
-                            EOF
+
+                        echo "Deployment done."
+                        EOF
                     """
                 }
             }
