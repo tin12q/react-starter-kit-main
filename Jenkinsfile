@@ -5,7 +5,7 @@ pipeline {
         GIT_REPO       = "https://github.com/tin12q/react-starter-kit-main.git"
         IMAGE_NAME     = "react-starter-kit"
         APP_HOST       = "54.210.126.158"       // IP App Server
-        SSH_CRED_ID    = "ssh-app-server"       // Jenkins Credentials ID
+        SSH_CRED_ID    = "ecb4770b-ae9b-4231-a222-01dfcb647525"       // Jenkins Credentials ID
         APP_USER       = "ubuntu"
         CONTAINER_NAME = "react-starter"
         HOST_PORT      = "80"                   // Cổng ngoài EC2
