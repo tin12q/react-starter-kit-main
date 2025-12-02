@@ -54,6 +54,7 @@ pipeline {
                     keyFileVariable: 'SSH_KEY',
                     usernameVariable: 'SSH_USER'
                 )]) {
+                    // eof must stay to the left
                     sh '''
                         ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no "$SSH_USER@$APP_HOST" <<EOF
                         echo "Unpacking image..."
@@ -72,8 +73,8 @@ pipeline {
                             ${IMAGE_NAME}:${BUILD_NUMBER}
                         
                         echo "Deployment done."
-                        EOF
-                        '''
+EOF
+'''
 
                 }
             }
