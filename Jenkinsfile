@@ -8,7 +8,7 @@ pipeline {
         SSH_CRED_ID    = "ecb4770b-ae9b-4231-a222-01dfcb647525"       // Jenkins Credentials ID
         APP_USER       = "ubuntu"
         CONTAINER_NAME = "react-starter"
-        HOST_PORT      = "80"                   // Cổng ngoài EC2
+        HOST_PORT      = "8080"                   // Cổng ngoài EC2
         APP_PORT       = "80"                   // Cổng trong container (Dockerfile EXPOSE 80)
     }
 
