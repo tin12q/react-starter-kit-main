@@ -54,9 +54,8 @@ pipeline {
                     keyFileVariable: 'SSH_KEY',
                     usernameVariable: 'SSH_USER'
                 )]) {
-                    sh """
-                        ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no "$SSH_USER@$APP_HOST" << EOF
-
+                    sh '''
+                        ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no "$SSH_USER@$APP_HOST" <<EOF
                         echo "Unpacking image..."
                         cd /tmp
                         bunzip2 -f image.tar.bz2
@@ -73,10 +72,9 @@ pipeline {
                             ${IMAGE_NAME}:${BUILD_NUMBER}
                         
                         echo "Deployment done."
-                        
                         EOF
+                        '''
 
-                    """
                 }
             }
         }
